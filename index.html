@@ -56,57 +56,52 @@
         ["Hi from Tim", "Hello Tim"],
       ];
 
-      class App extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {
-            chatPartnerId: -1,
-            chatHistory: chats,
-          };
-          this.addToChat = this.addToChat.bind(this);
-        }
+      function App() {
+        React.useEffect(() => {}, [chatHistory]);
 
-        addToChat(id, message) {
-          let messages = this.state.chatHistory;
+        const [chatPartnerId, setChatPartnerId] = React.useState(-1);
+        const [chatHistory, setChatHistory] = React.useState(chats);
+
+        const addToChat = (id, message) => {
+          let messages = chatHistory;
           messages[id].push(message);
-          this.setState({ chatHistory: messages });
-        }
+          //   https://stackoverflow.com/questions/56266575/why-is-usestate-not-triggering-re-render
+          setChatHistory([...messages]);
+        };
 
-        render() {
-          const names = chatNames.map((chatName, index) => (
-            <button
-              onClick={() => {
-                this.setState({ chatPartnerId: index });
-              }}
-            >
-              {chatName}
-            </button>
-          ));
+        const names = chatNames.map((chatName, index) => (
+          <button
+            onClick={() => {
+              setChatPartnerId(index);
+            }}
+          >
+            {chatName}
+          </button>
+        ));
 
-          return (
-            <div>
-              <p>Current chat id: {this.state.chatPartnerId}</p>
-
-              {names}
-              <div></div>
-              {this.state.chatPartnerId === -1 ? (
-                <p>Start a chat</p>
-              ) : (
-                <Chat
-                  id={this.state.chatPartnerId}
-                  name={chatNames[this.state.chatPartnerId]}
-                  chatHistory={this.state.chatHistory[this.state.chatPartnerId]}
-                  addToChat={this.addToChat}
-                />
-              )}
-            </div>
-          );
-        }
+        return (
+          <div>
+            <p>Current chat id: {chatPartnerId}</p>
+            {names}
+            <div></div>
+            {chatPartnerId === -1 ? (
+              <p>Start a chat</p>
+            ) : (
+              <Chat
+                id={chatPartnerId}
+                name={chatNames[chatPartnerId]}
+                chatHistory={chatHistory[chatPartnerId]}
+                addToChat={addToChat}
+              />
+            )}
+          </div>
+        );
       }
 
       function Chat(props) {
         const handleChange = () => {};
         const keyPressed = (event) => {
+          // https://www.freecodecamp.org/forum/t/react-redux-adding-a-handler-for-enter-key-events/241151
           if (event.key === "Enter") {
             props.addToChat(props.id, event.target.value);
             event.target.value = "";
@@ -117,7 +112,7 @@
         return (
           <div>
             <p>
-              `Chatting with Id:${id} Name: ${name}`
+              `Chatting with Id:{id} Name: {name}`
             </p>
             {messages}
             <input onChange={handleChange} onKeyPress={keyPressed} />
