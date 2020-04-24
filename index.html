@@ -12,10 +12,52 @@
     <div id="mydiv"></div>
 
     <script type="text/babel">
-      class Hello extends React.Component {
-        render() {
-          return <h1>Hello World!</h1>;
-        }
+      /*
+have the parent have all of the state including
+chat partners (id & names), chat history
+state - current chat id
+map a list of buttons with chat names
+have the onclick of the button set the state of the current chat history on the right side
+
+the current chat history will be a component that uses map to show the chats
+will prob have to use a hook maybe use effect to get the right chats to show based on the state of the button clicked on the left side
+when a chat is entered push to the array
+
+super easy part
+first build the data which should take a couple of minutes
+
+easy part
+render the buttons that show chat name and id
+show the current chat id if it is null then write no active chat
+
+medium part
+have the button click change the current chat state
+
+harder part
+on button click have the chat component render, prob using the state of the chat id
+first just get the chat id and name on each button click in console log
+
+next have the button click make the chat component change i.e. chat with john, mary, terry
+
+next render the list of chats/chat history with each button click
+
+next add a button in the component that adds "foo" on click and see if it persists even when switching chats
+
+swap out this functionality with an input box that does the same thing on pressing enter
+
+
+
+*/
+
+      let chatNames = ["John", "Mary", "Tim"];
+      let chats = [
+        ["Hi from John", "Hello John"],
+        ["Hi from Mary", "Hello Mary"],
+        ["Hi from Tim", "Hello Tim"],
+      ];
+
+      function Hello() {
+        return <h1>Hello Worlds!</h1>;
       }
 
       ReactDOM.render(<Hello />, document.getElementById("mydiv"));
