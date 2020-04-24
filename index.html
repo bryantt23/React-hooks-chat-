@@ -67,12 +67,21 @@
           super(props);
           this.state = {
             chatPartnerId: -1,
+            chatHistory: chats,
           };
+          this.addToChat = this.addToChat.bind(this);
         }
 
         addToChat(id, message) {
-          console.log(id + " " + message);
-          chats[id].push(message);
+          //   console.log(id + " " + message);
+          //   chats[id].push(message);
+          //   this.state.chatHistory[id].push(message);
+          //   let messages = this.state.chatHistory[id];
+          let messages = this.state.chatHistory;
+          messages[id].push(message);
+          //   debugger;
+          //   console.log(messages);
+          this.setState({ chatHistory: messages });
         }
 
         render() {
@@ -98,7 +107,7 @@
                 <Chat
                   id={this.state.chatPartnerId}
                   name={chatNames[this.state.chatPartnerId]}
-                  chatHistory={chats[this.state.chatPartnerId]}
+                  chatHistory={this.state.chatHistory[this.state.chatPartnerId]}
                   addToChat={this.addToChat}
                 />
               )}
