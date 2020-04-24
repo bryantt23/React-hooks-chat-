@@ -56,12 +56,6 @@
         ["Hi from Tim", "Hello Tim"],
       ];
 
-      let chatObject = {
-        John: ["Hi from John", "Hello John"],
-        Mary: ["Hi from Mary", "Hello John"],
-        Tim: ["Hi from Tim", "Hello Tim"],
-      };
-
       class App extends React.Component {
         constructor(props) {
           super(props);
@@ -110,35 +104,25 @@
         }
       }
 
-      class Chat extends React.Component {
-        constructor(props) {
-          super(props);
-          this.keyPressed = this.keyPressed.bind(this);
-        }
-        handleChange() {}
-        keyPressed(event) {
+      function Chat(props) {
+        const handleChange = () => {};
+        const keyPressed = (event) => {
           if (event.key === "Enter") {
-            // debugger;
-            this.props.addToChat(this.props.id, event.target.value);
+            props.addToChat(props.id, event.target.value);
             event.target.value = "";
           }
-        }
-        render() {
-          const { name, id, chatHistory, addToChat } = this.props;
-          const messages = chatHistory.map((message) => <p>{message}</p>);
-          return (
-            <div>
-              <p>
-                `Chatting with Id:${id} Name: ${name}`
-              </p>
-              {messages}
-              <input
-                onChange={this.handleChange}
-                onKeyPress={this.keyPressed}
-              />
-            </div>
-          );
-        }
+        };
+        const { name, id, chatHistory, addToChat } = props;
+        const messages = chatHistory.map((message) => <p>{message}</p>);
+        return (
+          <div>
+            <p>
+              `Chatting with Id:${id} Name: ${name}`
+            </p>
+            {messages}
+            <input onChange={handleChange} onKeyPress={keyPressed} />
+          </div>
+        );
       }
 
       ReactDOM.render(<App />, document.getElementById("mydiv"));
