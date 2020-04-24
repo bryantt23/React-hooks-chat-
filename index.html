@@ -86,15 +86,25 @@
 
               {names}
               <div></div>
-              {this.state.chatPartnerId === -1 ? <Chat /> : <p>Start a chat</p>}
+              {this.state.chatPartnerId === -1 ? (
+                <p>Start a chat</p>
+              ) : (
+                <Chat
+                  id={this.state.chatPartnerId}
+                  name={chatNames[this.state.chatPartnerId]}
+                />
+              )}
             </div>
           );
         }
       }
 
       class Chat extends React.Component {
+        constructor(props) {
+          super(props);
+        }
         render() {
-          return "Hi there from chat";
+          return "Hi there from chat" + this.props.name + " " + this.props.id;
         }
       }
 
