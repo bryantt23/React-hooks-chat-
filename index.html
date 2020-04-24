@@ -69,6 +69,12 @@
             chatPartnerId: -1,
           };
         }
+
+        addToChat(id, message) {
+          console.log(id + " " + message);
+          chats[id].push(message);
+        }
+
         render() {
           const names = chatNames.map((chatName, index) => (
             <button
@@ -93,6 +99,7 @@
                   id={this.state.chatPartnerId}
                   name={chatNames[this.state.chatPartnerId]}
                   chatHistory={chats[this.state.chatPartnerId]}
+                  addToChat={this.addToChat}
                 />
               )}
             </div>
@@ -105,7 +112,7 @@
           super(props);
         }
         render() {
-          const { name, id, chatHistory } = this.props;
+          const { name, id, chatHistory, addToChat } = this.props;
           const messages = chatHistory.map((message) => <p>{message}</p>);
           return (
             <div>
@@ -113,6 +120,13 @@
                 `Chatting with Id:${id} Name: ${name}`
               </p>
               {messages}
+              <button
+                onClick={() => {
+                  addToChat(id, "hiiiiiiii");
+                }}
+              >
+                Add Message
+              </button>
             </div>
           );
         }
