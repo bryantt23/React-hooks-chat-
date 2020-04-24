@@ -13,41 +13,41 @@
 
     <script type="text/babel">
       /*
-have the parent have all of the state including
-chat partners (id & names), chat history
-state - current chat id
-map a list of buttons with chat names
-have the onclick of the button set the state of the current chat history on the right side
+      have the parent have all of the state including
+      chat partners (id & names), chat history
+      state - current chat id
+      map a list of buttons with chat names
+      have the onclick of the button set the state of the current chat history on the right side
 
-the current chat history will be a component that uses map to show the chats
-will prob have to use a hook maybe use effect to get the right chats to show based on the state of the button clicked on the left side
-when a chat is entered push to the array
+      the current chat history will be a component that uses map to show the chats
+      will prob have to use a hook maybe use effect to get the right chats to show based on the state of the button clicked on the left side
+      when a chat is entered push to the array
 
-super easy part
-first build the data which should take a couple of minutes
+      super easy part
+      first build the data which should take a couple of minutes
 
-easy part
-render the buttons that show chat name and id
-show the current chat id if it is null then write no active chat
+      easy part
+      render the buttons that show chat name and id
+      show the current chat id if it is null then write no active chat
 
-medium part
-have the button click change the current chat state
+      medium part
+      have the button click change the current chat state
 
-harder part
-on button click have the chat component render, prob using the state of the chat id
-first just get the chat id and name on each button click in console log
+      harder part
+      on button click have the chat component render, prob using the state of the chat id
+      first just get the chat id and name on each button click in console log
 
-next have the button click make the chat component change i.e. chat with john, mary, terry
+      next have the button click make the chat component change i.e. chat with john, mary, terry
 
-next render the list of chats/chat history with each button click
+      next render the list of chats/chat history with each button click
 
-next add a button in the component that adds "foo" on click and see if it persists even when switching chats
+      next add a button in the component that adds "foo" on click and see if it persists even when switching chats
 
-swap out this functionality with an input box that does the same thing on pressing enter
+      swap out this functionality with an input box that does the same thing on pressing enter
 
 
 
-*/
+      */
 
       let chatNames = ["John", "Mary", "Tim"];
       let chats = [
@@ -56,11 +56,49 @@ swap out this functionality with an input box that does the same thing on pressi
         ["Hi from Tim", "Hello Tim"],
       ];
 
-      function Hello() {
-        return <h1>Hello Worlds!</h1>;
+      let chatObject = {
+        John: ["Hi from John", "Hello John"],
+        Mary: ["Hi from Mary", "Hello John"],
+        Tim: ["Hi from Tim", "Hello Tim"],
+      };
+
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            chatPartnerId: -1,
+          };
+        }
+        render() {
+          const names = chatNames.map((chatName, index) => (
+            <button
+              onClick={() => {
+                this.setState({ chatPartnerId: index });
+              }}
+            >
+              {chatName}
+            </button>
+          ));
+
+          return (
+            <div>
+              <p>Current chat id: {this.state.chatPartnerId}</p>
+
+              {names}
+              <div></div>
+              {this.state.chatPartnerId === -1 ? <Chat /> : <p>Start a chat</p>}
+            </div>
+          );
+        }
       }
 
-      ReactDOM.render(<Hello />, document.getElementById("mydiv"));
+      class Chat extends React.Component {
+        render() {
+          return "Hi there from chat";
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById("mydiv"));
     </script>
   </body>
 </html>
