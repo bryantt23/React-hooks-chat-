@@ -73,14 +73,8 @@
         }
 
         addToChat(id, message) {
-          //   console.log(id + " " + message);
-          //   chats[id].push(message);
-          //   this.state.chatHistory[id].push(message);
-          //   let messages = this.state.chatHistory[id];
           let messages = this.state.chatHistory;
           messages[id].push(message);
-          //   debugger;
-          //   console.log(messages);
           this.setState({ chatHistory: messages });
         }
 
@@ -119,6 +113,15 @@
       class Chat extends React.Component {
         constructor(props) {
           super(props);
+          this.keyPressed = this.keyPressed.bind(this);
+        }
+        handleChange() {}
+        keyPressed(event) {
+          if (event.key === "Enter") {
+            // debugger;
+            this.props.addToChat(this.props.id, event.target.value);
+            event.target.value = "";
+          }
         }
         render() {
           const { name, id, chatHistory, addToChat } = this.props;
@@ -129,13 +132,10 @@
                 `Chatting with Id:${id} Name: ${name}`
               </p>
               {messages}
-              <button
-                onClick={() => {
-                  addToChat(id, "hiiiiiiii");
-                }}
-              >
-                Add Message
-              </button>
+              <input
+                onChange={this.handleChange}
+                onKeyPress={this.keyPressed}
+              />
             </div>
           );
         }
